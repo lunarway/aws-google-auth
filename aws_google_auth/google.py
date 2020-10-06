@@ -80,6 +80,9 @@ class Google:
             sess.raise_for_status()
         except HTTPError as ex:
 
+            print("Error occurred:\n")
+            print(sess.text)
+
             if self.save_failure:
                 logging.exception("Saving failure trace in 'failure.html'", ex)
                 with open("failure.html", 'w') as out:
@@ -330,7 +333,8 @@ class Google:
         try:
             saml_element = parsed.find('input', {'name': 'SAMLResponse'}).get('value')
         except:
-
+            print("Error ocurred:\n")
+            print(str(self.session_state.text.encode('utf-8')))
             if self.save_failure:
                 logging.error("SAML lookup failed, storing failure page to "
                               "'saml.html' to assist with debugging.")
